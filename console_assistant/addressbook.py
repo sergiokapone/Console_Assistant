@@ -69,8 +69,17 @@ class AddressBook(UserList):
         # Проверяем, есть ли уже контакт с таким именем
         for record in self.data:
             if record.name == name:
-                # print(f"Contact with {name} already exist!")
-                raise ValueError("Contact already exist in AddressBook.")
+                # # print(f"Contact with {name} already exist!")
+                # raise ValueError("Contact already exist in AddressBook.")
+                if birthday:
+                    record.birthday.extend([Birthday(bd) for bd in birthday])
+                if phones:
+                    record.phones.extend([Phone(ph) for ph in phones])
+                if emails:
+                    record.emails.extend([Email(em) for em in emails])
+                if address:
+                    record.address.extend(address)
+                return
 
         # Если контакта с таким именем еще нет, то создаем новый
         birthday = [Birthday(birthday) for birthday in birthday] if birthday else []
@@ -108,6 +117,14 @@ class AddressBook(UserList):
                 return
         self.add_record(name=name, address=address)
 
+    def add_birthday(self, name, birthday):
+        for record in self.data:
+            if record.name == name:
+                record.birthday.clear()
+                record.birthday.append(Birthday(birthday))
+                return
+        self.add_record(name=name, birthday=[birthday])
+
     def remove_record(self, name):
         for record in self.data:
             if record.name == name:
@@ -129,13 +146,6 @@ class AddressBook(UserList):
                 return True
         return False
 
-    def add_birthday(self, name, birthday):
-        for record in self.data:
-            if record.name == name:
-                record.birthday.clear()
-                record.birthday.append(Birthday(birthday))
-                return
-        self.add_record(name=name, birthday=[birthday])
 
     def delete_phone_by_index(self, name, phone_index):
         for record in self.data:
@@ -203,23 +213,3 @@ class AddressBook(UserList):
             if i + n < len(items):
                 yield "continue"
 
-
-# отладка
-if __name__ == "__main__":
-    contacts = AddressBook()
-    # contacts.add_record("Sergiy")
-    # contacts.add_phone("Sergiy", "0987654321")
-    # contacts.add_phone("Sergiy", "0987654321")
-    # contacts.add_phone("Sergiy", "2323456545")
-    # contacts.add_email("Sergiy", "qw@df.df")
-    # contacts.add_email("Sergiy", "qww@dsdf.dsdf")
-    # contacts.add_email("Sergiy", "qww@dsdf.dsdf")
-    # contacts.add_address("Sergiy", "Київ де не де")
-    # contacts.add_record("Angela")
-    # contacts.add_address("Sergiy", "Ytw")
-    # contacts.add_birthday("Sergiy", "1.05.1987")
-    # contacts.delete_phone_by_index("Sergiy", 2)
-    # contacts.delete_email_by_index("Sergiy", 0)
-    # contacts.add_record("Lego")
-    # print(type(contacts) == AddressBook)
-    # # print(contacts.upcoming_birthdays(3))

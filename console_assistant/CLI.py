@@ -148,7 +148,7 @@ def add_contact(*args):
         if email:
             contacts.add_email(name, email)
 
-    return f"I added a contact {name} to the address book."
+    return f"I added a info to contact {name} to the address book."
 
 
 @input_error
@@ -172,28 +172,28 @@ def remove_contact(*args):
     return f"{R}Contact {args[0]} not in address book{N}."
 
 
-@input_error
-def set_phone(*args):
-    """Додає телефонный номер в контакт по імені."""
+# @input_error
+# def set_phone(*args):
+#     """Додає телефонный номер в контакт по імені."""
 
-    usage_message = f"Example of usage: {G}set phone {Y}Username 0985467856{N}"
-    error_messageK, error_messageV = None, None
+#     usage_message = f"Example of usage: {G}set phone {Y}Username 0985467856{N}"
+#     error_messageK, error_messageV = None, None
 
-    if not args[0]:
-        error_messageK = "Give me a name, please."
-    if not args[1]:
-        error_messageV = "Give me a phone, please."
+#     if not args[0]:
+#         error_messageK = "Give me a name, please."
+#     if not args[1]:
+#         error_messageV = "Give me a phone, please."
 
-    if error_messageK:
-        print(usage_message)
-        raise KeyError(error_messageK)
-    if error_messageV:
-        print(usage_message)
-        raise ValueError(error_messageV)
+#     if error_messageK:
+#         print(usage_message)
+#         raise KeyError(error_messageK)
+#     if error_messageV:
+#         print(usage_message)
+#         raise ValueError(error_messageV)
 
-    contacts.add_phone(args[0], args[1])
+#     contacts.add_phone(args[0], args[1])
 
-    return f"I added a phone {args[1]} to contact {args[0]}"
+#     return f"I added a phone {args[1]} to contact {args[0]}"
 
 
 @input_error
@@ -218,29 +218,29 @@ def remove_phone(*args):
     return f"{R}No contact {args[0]} in AddressBook.{N}"
 
 
-@input_error
-def set_email(*args):
-    """Додає email адресу в контакті по імені."""
+# @input_error
+# def set_email(*args):
+#     """Додає email адресу в контакті по імені."""
 
-    usage_message = f"Example of usage: {G}set email {Y}Username my_mail@i.ua{N}"
-    error_messageK, error_messageV = None, None
+#     usage_message = f"Example of usage: {G}set email {Y}Username my_mail@i.ua{N}"
+#     error_messageK, error_messageV = None, None
 
-    if not args[0]:
-        error_messageK = "Give me a name, please"
+#     if not args[0]:
+#         error_messageK = "Give me a name, please"
 
-    if not args[1]:
-        error_messageV = "Give me a email, please"
+#     if not args[1]:
+#         error_messageV = "Give me a email, please"
 
-    if error_messageK:
-        print(usage_message)
-        raise KeyError(error_messageK)
-    if error_messageV:
-        print(usage_message)
-        raise ValueError(error_messageV)
+#     if error_messageK:
+#         print(usage_message)
+#         raise KeyError(error_messageK)
+#     if error_messageV:
+#         print(usage_message)
+#         raise ValueError(error_messageV)
 
-    contacts.add_email(args[0], args[1])
+#     contacts.add_email(args[0], args[1])
 
-    return f"I added a email {args[1]} to contact {args[0]}"
+#     return f"I added a email {args[1]} to contact {args[0]}"
 
 
 @input_error
@@ -266,29 +266,29 @@ def remove_email(*args):
     return f"{R}No contact {args[0]} in AddressBook.{N}"
 
 
-@input_error
-def set_address(*args):
-    """Додає адресу в контакт по імені."""
+# @input_error
+# def set_address(*args):
+#     """Додає адресу в контакт по імені."""
 
-    usage_message = f"Example of usage: {G}set address {Y}Username Address of user{N}"
-    error_messageK, error_messageV = None, None
+#     usage_message = f"Example of usage: {G}set address {Y}Username Address of user{N}"
+#     error_messageK, error_messageV = None, None
 
-    if not args[0]:
-        error_messageK = "Give me a name, please"
+#     if not args[0]:
+#         error_messageK = "Give me a name, please"
 
-    if not args[1]:
-        error_messageV = "Give me an address, please"
+#     if not args[1]:
+#         error_messageV = "Give me an address, please"
 
-    if error_messageK:
-        print(usage_message)
-        raise KeyError(error_messageK)
-    if error_messageV:
-        print(usage_message)
-        raise ValueError(error_messageV)
+#     if error_messageK:
+#         print(usage_message)
+#         raise KeyError(error_messageK)
+#     if error_messageV:
+#         print(usage_message)
+#         raise ValueError(error_messageV)
 
-    contacts.add_address(args[0], args[1])
+#     contacts.add_address(args[0], args[1])
 
-    return f"I added a address {args[1]} to contact {args[0]}"
+#     return f"I added a address {args[1]} to contact {args[0]}"
 
 
 @input_error
@@ -311,29 +311,29 @@ def remove_address(*args):
     return f"{R}No contact {args[0]} in AddressBook.{N}"
 
 
-@input_error
-def set_birthday(*args):
-    """Функція-handler додає день народження до контакту."""
+# @input_error
+# def set_birthday(*args):
+#     """Функція-handler додає день народження до контакту."""
 
-    usage_message = f"Example of usage: {G}set birthday {Y}Username 13.03.1989{N}"
-    error_messageK, error_messageV = None, None
+#     usage_message = f"Example of usage: {G}set birthday {Y}Username 13.03.1989{N}"
+#     error_messageK, error_messageV = None, None
 
-    if not args[0]:
-        error_messageK = "Give me a name, please"
+#     if not args[0]:
+#         error_messageK = "Give me a name, please"
 
-    if not args[1]:
-        error_messageV = "Give me an birthday in format DD.MM.YYYY, please"
+#     if not args[1]:
+#         error_messageV = "Give me an birthday in format DD.MM.YYYY, please"
 
-    if error_messageK:
-        print(usage_message)
-        raise KeyError(error_messageK)
-    if error_messageV:
-        print(usage_message)
-        raise ValueError(error_messageV)
+#     if error_messageK:
+#         print(usage_message)
+#         raise KeyError(error_messageK)
+#     if error_messageV:
+#         print(usage_message)
+#         raise ValueError(error_messageV)
 
-    contacts.add_birthday(args[0], args[1])
+#     contacts.add_birthday(args[0], args[1])
 
-    return f"I added a birthday {args[1]} to contact {args[0]}"
+#     return f"I added a birthday {args[1]} to contact {args[0]}"
 
 
 @input_error
@@ -461,12 +461,12 @@ def show_contacts(*args):
 def add_note(*args):
     usage_message = f"Example of usage: {G}add note {Y}Tag Text{N}"
     error_message = None
-    if not args[0]:
+    if args[0] is None:
         error_message = "Give me a tag and text, please."
-    if not args[1]:
-        error_message = "Give me a text, please."
-    if args[0] is not None and args[0].isdigit():
+    elif args[0] is not None and args[0].isdigit():
         error_message = "Tag cannot be a number."
+    elif not args[1]:
+        error_message = "Give me a text, please."
     if error_message:
         print(usage_message)
         raise ValueError(error_message)
@@ -529,17 +529,18 @@ def build_notes_table(notes, original_indices=False):
 
 # @input_error
 def show_notes(*args):
-    if args[0] is None or not args[0].isdigit():
-        notes = notebook.display_notes(tag=args[0] or None, original_indices=True)
-        print(build_notes_table(notes, original_indices=True))
-    else:
-        n = int(args[0])
-        for i, tab in enumerate(notebook.iterator_notes(n)):
-            if tab == "continue":
-                input(G + "Press <Enter> to continue..." + N)
-            else:
-                table = build_notes_table(tab)
-                print(table)
+    if len(notebook) != 0:
+        if args[0] is None or not args[0].isdigit():
+            notes = notebook.display_notes(tag=args[0] or None, original_indices=True)
+            print(build_notes_table(notes, original_indices=True))
+        else:
+            n = int(args[0])
+            for i, tab in enumerate(notebook.iterator_notes(n)):
+                if tab == "continue":
+                    input(G + "Press <Enter> to continue..." + N)
+                else:
+                    table = build_notes_table(tab)
+                    print(table)
     return f"Notes book contain {len(notebook)} note(s)."
 
 
@@ -689,9 +690,6 @@ class Command:
         self.description = description
         self.example = example
         self.handler = handler
-
-    def execute(self):
-        return self.handler
     
 
 COMMANDS = {
@@ -700,13 +698,13 @@ COMMANDS = {
     "hello": Command("hello", hello),
     # --- Manage contacts ---
     "add contact": Command("add contact", add_contact),
-    "set phone": Command("set phone", set_phone),
+    # "set phone": Command("set phone", set_phone),
     "remove phone": Command("remove phone", remove_phone),
-    "set email": Command("set email", set_email),
+    # "set email": Command("set email", set_email),
     "remove email": Command("remove email", remove_email),
-    "set address": Command("set address", set_address),
+    # "set address": Command("set address", set_address),
     "remove address": Command("remove address", remove_address),
-    "set birthday": Command("set birthday", set_birthday),
+    # "set birthday": Command("set birthday", set_birthday),
     "upcoming birthdays": Command("upcoming birthdays", upcoming_birthdays),
     "show contacts": Command("show contacts", show_contacts),
     "search contact": Command("search contact", search_contact),
@@ -779,11 +777,8 @@ class CommandExecutor:
     def __init__(self, commands):
         self.commands = commands
 
-    def get_handler(self, command):
-        return self.commands.get(command).execute()
-
     def execute_command(self, command, *args):
-        handler = self.get_handler(command)
+        handler = self.commands.get(command)
         if handler is None:
             if command not in COMMANDS:
                 matches = get_close_matches(args[0], COMMANDS)
@@ -795,7 +790,7 @@ class CommandExecutor:
             else:
                 return "Command not implemented"
         else:
-            return handler(*args)
+            return handler.handler(*args)
 
 
 class InputReader:
@@ -820,7 +815,7 @@ notebook = Notebook()  # Global variable for storing notes
 
 NOTES_FILE = "notes.bin"
 CONTACT_FILE = "contacts.bin"
-HELLO_MESSAGE = f"{N}Hello, I'm an assistant v1.0.0 {G}(c) Team-9, GoIT 2023.{N}\nType {Y}help{N} for more information.{N}"
+HELLO_MESSAGE = f"{N}Hello, I'm an assistant v1.0.0 {G}(c) Team-9, GoIT 2023.{N}\nType {Y}help{N} for more information.{N}" # noqa
 
 class UserView(ABC):
     @abstractmethod
