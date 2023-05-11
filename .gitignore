@@ -2,6 +2,6 @@
 build/
 helper.egg-info/
 assistant.egg-info/
-console_helper/__pycache__/
+console_assistant/__pycache__/
 Pdf/
 .github/

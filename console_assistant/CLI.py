@@ -8,29 +8,29 @@ from difflib import get_close_matches
 from prompt_toolkit import PromptSession
 from prompt_toolkit.completion import Completion, Completer
 from prompt_toolkit.shortcuts import clear
-from prompt_toolkit.auto_suggest import AutoSuggestFromHistory
 
 from prettytable.colortable import ColorTable, Themes
 
 from pygments import highlight
 from pygments.lexers import get_lexer_by_name
 from pygments.formatters import TerminalFormatter
+from prompt_toolkit.auto_suggest import AutoSuggestFromHistory
 
 from bs4 import BeautifulSoup
 import requests
 
-from .addressbook import AddressBook
+from console_assistant.addressbook import AddressBook
 
-from .notebook import Notebook
+from console_assistant.notebook import Notebook
 
-from .currenсy import CurrencyList
+from console_assistant.currenсy import CurrencyList
 
-from .serializer import PickleStorage
+from console_assistant.serializer import PickleStorage
 
-from .filesorter import sort_folder
+from console_assistant.filesorter import sort_folder
 
 
-from .colors import *
+from console_assistant.colors import *
 
 
 # ================================= Decorator ================================#
@@ -67,19 +67,6 @@ def good_bye(*args):
     save_notes(NOTES_FILE)
     print("See you later.\nDotn't warry, your data was saved.")
     return "Good bye!"
-
-
-@input_error
-def undefined(*args):
-    """Реакція на невідому команду"""
-
-    if args[0] not in list(COMMANDS.keys()):
-        matches = get_close_matches(args[0], list(COMMANDS.keys()))
-        if matches:
-            suggestion = matches[0]
-            return f"{W}Command {R + args[0] + N} {W}not found. Possibly you mean {Y + suggestion + N}?"
-        else:
-            return R + "What do you mean?" + N
 
 
 @input_error
@@ -695,50 +682,60 @@ def cls(*args):
 
 # =============================== handler loader =============================#
 
+class Command:
+    def __init__(self, name, handler, description=None, example=None):
+        self.name = name
+        self.description = description
+        self.example = example
+        self.handler = handler
+
+    def execute(self):
+        return self.handler
+    
+
 COMMANDS = {
     # --- Hello commands ---
-    "help": help_commands,
-    "hello": hello,
+    "help": Command("help", help_commands),
+    "hello": Command("hello", hello),
     # --- Manage contacts ---
-    "add contact": add_contact,
-    "set phone": set_phone,
-    "remove phone": remove_phone,
-    "set email": set_email,
-    "remove email": remove_email,
-    "set address": set_address,
-    "remove address": remove_address,
-    "set birthday": set_birthday,
-    "upcoming birthdays": upcoming_birthdays,
-    "show contacts": show_contacts,
-    "search contact": search_contact,
-    "show contact": show_contact,
-    "remove contact": remove_contact,
-    "change name": change_name,
-    "save": save,
-    "load": load,
+    "add contact": Command("add contact", add_contact),
+    "set phone": Command("set phone", set_phone),
+    "remove phone": Command("remove phone", remove_phone),
+    "set email": Command("set email", set_email),
+    "remove email": Command("remove email", remove_email),
+    "set address": Command("set address", set_address),
+    "remove address": Command("remove address", remove_address),
+    "set birthday": Command("set birthday", set_birthday),
+    "upcoming birthdays": Command("upcoming birthdays", upcoming_birthdays),
+    "show contacts": Command("show contacts", show_contacts),
+    "search contact": Command("search contact", search_contact),
+    "show contact": Command("show contact", show_contact),
+    "remove contact": Command("remove contact", remove_contact),
+    "change name": Command("change name", change_name),
+    "save": Command("save", save),
+    "load": Command("load", load),
     # --- Валюта ---
-    "currency": get_currency,
+    "currency": Command("currency", get_currency),
     # --- Погода ---
-    "weather in": get_weather,
+    "weather in": Command("weather in", get_weather),
     # --- Manage notes ---
-    "add note": add_note,
-    "add tag": add_tag,
-    "remove note": remove_note,
-    "show notes": show_notes,
-    "save notes": save_notes,
-    "load notes": load_notes,
-    "search notes": search_notes,
-    "change note": change_note,
-    "remove tag": remove_tag,
+    "add note": Command("add note", add_note),
+    "add tag": Command("add tag", add_tag),
+    "remove note": Command("remove note", remove_note),
+    "show notes": Command("show notes", show_notes),
+    "save notes": Command("save notes", save_notes),
+    "load notes": Command("load notes", load_notes),
+    "search notes": Command("search notes", search_notes),
+    "change note": Command("change note", change_note),
+    "remove tag": Command("remove tag", remove_tag),
     # --- Sorting folder commnad ---
-    "sort folder": sort_folder_cli,
+    "sort folder": Command("sort folder", sort_folder_cli),
     # --- Googd bye commnad ---
-    "good bye": good_bye,
-    "close": good_bye,
-    "exit": good_bye,
-    "cls": cls,
+    "good bye": Command("good bye", good_bye),
+    "close": Command("close", good_bye),
+    "exit": Command("exit", good_bye),
+    "cls": Command("cls", cls),
 }
-
 
 class CommandCompleter(Completer):
     def get_completions(self, document, complete_event):
@@ -748,76 +745,70 @@ class CommandCompleter(Completer):
             matches = [c for c in COMMANDS if c.startswith(command)]
             for m in matches:
                 yield Completion(m, display=m, start_position=-len(command))
-        # else:
-        #     matches = [c for c in COMMANDS if c.startswith(command)]
-        #     for m in matches:
-        #         usage = COMMAND_USAGE.get(m, "")
-        #         yield Completion(usage, display=usage)
 
-
-# COMMAND_USAGE = {
-#     "add contact": "Someone 03.05.1995",
-#     "set phone": "Username 0935841245",
-#     "remove phone": "Username 12.12.1978",
-#     "set email": "my_name@gmail.com",
-#     "remove email": "rUsername 2",
-#     "set address": "",
-#     "remove address": "",
-#     "set birthday": "Username 12.12.1978",
-#     "upcoming birthdays": "5",
-#     "show contacts": "",
-#     "search contact": "SearchQuery",
-#     "show contact": "Username",
-#     "remove contact": "Username",
-#     "change name": "Username Bobo",
-# }
-
-
-session = PromptSession(completer=CommandCompleter(), complete_while_typing=True)
-
-command_pattern = "|".join(COMMANDS.keys())
-pattern = re.compile(
-    r"\b(\.|"
-    + command_pattern
-    + r")\b(?:\s+([а-яА-Яa-zA-Z0-9\.\:\\_\-]+))?(?:\s+(.+))?",
-    re.IGNORECASE,
-)
-
-
-def get_handler(*args):
-    """Функція викликає відповідний handler."""
-
-    return COMMANDS.get(args[0], undefined)
-
-
-def wait_for_input():
-    while True:
-        inp = session.prompt(
-            ">>> ",
-            auto_suggest=AutoSuggestFromHistory(),
+class CommandParser:
+    def __init__(self, commands):
+        self.commands = commands
+        self.command_pattern = "|".join(commands)
+        self.pattern = re.compile(
+            r"\b(\.|"
+            + self.command_pattern
+            + r")\b(?:\s+([а-яА-Яa-zA-Z0-9\.\:\\_\-]+))?(?:\s+(.+))?",
+            re.IGNORECASE,
         )
-        if inp == "":
-            continue
-        break
-    return inp
 
+    def parse_command(self, command):
+        text = self.pattern.search(command)
 
-def parse_command(command):
-    text = pattern.search(command)
-
-    params = (
-        tuple(
-            map(
-                # Made a commands to be a uppercase
-                lambda x: x.lower() if text.groups().index(x) == 0 else x,
-                text.groups(),
+        params = (
+            tuple(
+                map(
+                    lambda x: x.lower() if text.groups().index(x) == 0 else x,
+                    text.groups(),
+                )
             )
+            if text
+            else (None, command, 0)
         )
-        if text
-        else (None, command, 0)
-    )
 
-    return params
+        return params
+
+
+class CommandExecutor:
+    def __init__(self, commands):
+        self.commands = commands
+
+    def get_handler(self, command):
+        return self.commands.get(command).execute()
+
+    def execute_command(self, command, *args):
+        handler = self.get_handler(command)
+        if handler is None:
+            if command not in COMMANDS:
+                matches = get_close_matches(args[0], COMMANDS)
+                if matches:
+                    suggestion = matches[0]
+                    return f"{W}Command {R + args[0] + N} {W}not found. Possibly you mean {Y + suggestion + N}?" # noqa
+                else:
+                    return R + "What do you mean?" + N
+            else:
+                return "Command not implemented"
+        else:
+            return handler(*args)
+
+
+class InputReader:
+    def __init__(self):
+        self.session = PromptSession(completer=CommandCompleter(), complete_while_typing=True, auto_suggest=AutoSuggestFromHistory()) # noqa
+
+    def wait_for_input(self):
+        while True:
+            inp = self.session.prompt(">>> ")
+            if inp == "":
+                continue
+            break
+        return inp
+    
 
 
 # ================================ main function ============================ #
@@ -836,8 +827,11 @@ def main():
     print(HELLO_MESSAGE)
     load(CONTACT_FILE)
     load_notes(NOTES_FILE)
+    parser = CommandParser(COMMANDS)
+    executor = CommandExecutor(COMMANDS)
+    reader = InputReader()
     while True:
-        command = wait_for_input()
+        command = reader.wait_for_input()
         if command.strip() == ".":
             save(CONTACT_FILE)
             save_notes(NOTES_FILE)
@@ -845,9 +839,8 @@ def main():
         if command.strip() == "*":
             return
 
-        params = parse_command(command)
-        handler = get_handler(*params)
-        response = handler(*params[1:])
+        params = parser.parse_command(command)
+        response = executor.execute_command(params[0], *params[1:])
         print(f"{G}{response}{N}")
 
         if response == "Good bye!":
