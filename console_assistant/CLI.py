@@ -1,4 +1,5 @@
 """Реалізація інтерфейсу командного рядка"""
+from abc import ABC, abstractmethod
 import re
 import os
 import os.path
@@ -821,6 +822,14 @@ NOTES_FILE = "notes.bin"
 CONTACT_FILE = "contacts.bin"
 HELLO_MESSAGE = f"{N}Hello, I'm an assistant v1.0.0 {G}(c) Team-9, GoIT 2023.{N}\nType {Y}help{N} for more information.{N}"
 
+class UserView(ABC):
+    @abstractmethod
+    def display(self, data):
+        pass
+class ConsoleView(UserView):
+    def display(self, data):
+        print(data)
+
 
 def main():
     os.system("cls" if os.name == "nt" else "clear")
@@ -830,6 +839,7 @@ def main():
     parser = CommandParser(COMMANDS)
     executor = CommandExecutor(COMMANDS)
     reader = InputReader()
+    console_view = ConsoleView()
     while True:
         command = reader.wait_for_input()
         if command.strip() == ".":
@@ -841,10 +851,10 @@ def main():
 
         params = parser.parse_command(command)
         response = executor.execute_command(params[0], *params[1:])
-        print(f"{G}{response}{N}")
+        console_view.display(f"{G}{response}{N}")
 
         if response == "Good bye!":
-            return None
+            return
 
 
 # ================================ main program ============================= #
