@@ -1,7 +1,7 @@
 # Console Assistant
 
 Console Assistant is a `python 3.x`-based command-line program that allows
-you to manage your contacts and notes, sort files in a folder by category and delete file copies..
+you to manage your contacts and notes, sort files in a folder by category and delete file copies.
 
 The assistant saves contacts and notes to the folder of the current user.
 For example, in `Windows` it's a folder `C:\Users\<User>\`
@@ -70,13 +70,10 @@ pip install -r requirements.txt
 ### Manage contacts commands
 
 - `add contact`: Add a contact to the address book.
-- `set phone:` Allows the user to set their phone number.
 - `remove phone:` Removes the user phone number.
-- `set email`: Allows the user to set their email address.
 - `remove email:` Removes the user email.
 - `set address`: Allows the user to set their address.
 - `remove address:` Removes the user address.
-- `set birthday`: Allows the user to set their birthday.
 - `upcoming birthdays`: Shows the list of upcoming birthdays.
 - `show contacts`: Shows the list of saved contacts.
 - `show contact`: Shows the details of a specific contact.

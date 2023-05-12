@@ -266,29 +266,29 @@ def remove_email(*args):
     return f"{R}No contact {args[0]} in AddressBook.{N}"
 
 
-# @input_error
-# def set_address(*args):
-#     """Додає адресу в контакт по імені."""
+@input_error
+def set_address(*args):
+    """Додає адресу в контакт по імені."""
 
-#     usage_message = f"Example of usage: {G}set address {Y}Username Address of user{N}"
-#     error_messageK, error_messageV = None, None
+    usage_message = f"Example of usage: {G}set address {Y}Username Address of user{N}"
+    error_messageK, error_messageV = None, None
 
-#     if not args[0]:
-#         error_messageK = "Give me a name, please"
+    if not args[0]:
+        error_messageK = "Give me a name, please"
 
-#     if not args[1]:
-#         error_messageV = "Give me an address, please"
+    if not args[1]:
+        error_messageV = "Give me an address, please"
 
-#     if error_messageK:
-#         print(usage_message)
-#         raise KeyError(error_messageK)
-#     if error_messageV:
-#         print(usage_message)
-#         raise ValueError(error_messageV)
+    if error_messageK:
+        print(usage_message)
+        raise KeyError(error_messageK)
+    if error_messageV:
+        print(usage_message)
+        raise ValueError(error_messageV)
 
-#     contacts.add_address(args[0], args[1])
+    contacts.add_address(args[0], args[1])
 
-#     return f"I added a address {args[1]} to contact {args[0]}"
+    return f"I added a address {args[1]} to contact {args[0]}"
 
 
 @input_error
@@ -703,7 +703,7 @@ COMMANDS = {
     "remove phone": Command("remove phone", remove_phone),
     # "set email": Command("set email", set_email),
     "remove email": Command("remove email", remove_email),
-    # "set address": Command("set address", set_address),
+    "set address": Command("set address", set_address),
     "remove address": Command("remove address", remove_address),
     # "set birthday": Command("set birthday", set_birthday),
     "upcoming birthdays": Command("upcoming birthdays", upcoming_birthdays),
