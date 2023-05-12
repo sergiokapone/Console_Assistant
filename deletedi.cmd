@@ -1,0 +1,1 @@
+docker rmi --force sergiokapone/console_assistant

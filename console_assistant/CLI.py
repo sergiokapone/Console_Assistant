@@ -658,7 +658,7 @@ def help_commands(*args):
     """Функція показує перелік всіх команд."""
 
     PACKAGE_ROOT = os.path.abspath(os.path.dirname(__file__))
-    README_PATH = os.path.join(PACKAGE_ROOT, "../README.md")
+    README_PATH = os.path.join(PACKAGE_ROOT, "../README.MD")
 
     if not os.path.exists(README_PATH):
         return R + f"File {README_PATH} not found." + N
@@ -684,13 +684,14 @@ def cls(*args):
 
 # =============================== handler loader =============================#
 
+
 class Command:
     def __init__(self, name, handler, description=None, example=None):
         self.name = name
         self.description = description
         self.example = example
         self.handler = handler
-    
+
 
 COMMANDS = {
     # --- Hello commands ---
@@ -736,6 +737,7 @@ COMMANDS = {
     "cls": Command("cls", cls),
 }
 
+
 class CommandCompleter(Completer):
     def get_completions(self, document, complete_event):
         text_before_cursor = document.current_line_before_cursor
@@ -744,6 +746,7 @@ class CommandCompleter(Completer):
             matches = [c for c in COMMANDS if c.startswith(command)]
             for m in matches:
                 yield Completion(m, display=m, start_position=-len(command))
+
 
 class CommandParser:
     def __init__(self, commands):
@@ -784,7 +787,7 @@ class CommandExecutor:
                 matches = get_close_matches(args[0], COMMANDS)
                 if matches:
                     suggestion = matches[0]
-                    return f"{W}Command {R + args[0] + N} {W}not found. Possibly you mean {Y + suggestion + N}?" # noqa
+                    return f"{W}Command {R + args[0] + N} {W}not found. Possibly you mean {Y + suggestion + N}?"  # noqa
                 else:
                     return R + "What do you mean?" + N
             else:
@@ -795,7 +798,11 @@ class CommandExecutor:
 
 class InputReader:
     def __init__(self):
-        self.session = PromptSession(completer=CommandCompleter(), complete_while_typing=True, auto_suggest=AutoSuggestFromHistory()) # noqa
+        self.session = PromptSession(
+            completer=CommandCompleter(),
+            complete_while_typing=True,
+            auto_suggest=AutoSuggestFromHistory(),
+        )  # noqa
 
     def wait_for_input(self):
         while True:
@@ -804,7 +811,6 @@ class InputReader:
                 continue
             break
         return inp
-    
 
 
 # ================================ main function ============================ #
@@ -815,12 +821,15 @@ notebook = Notebook()  # Global variable for storing notes
 
 NOTES_FILE = "notes.bin"
 CONTACT_FILE = "contacts.bin"
-HELLO_MESSAGE = f"{N}Hello, I'm an assistant v1.0.0 {G}(c) Team-9, GoIT 2023.{N}\nType {Y}help{N} for more information.{N}" # noqa
+HELLO_MESSAGE = f"{N}Hello, I'm an assistant v1.0.0 {G}(c) Team-9, GoIT 2023.{N}\nType {Y}help{N} for more information.{N}"  # noqa
+
 
 class UserView(ABC):
     @abstractmethod
     def display(self, data):
         pass
+
+
 class ConsoleView(UserView):
     def display(self, data):
         print(data)

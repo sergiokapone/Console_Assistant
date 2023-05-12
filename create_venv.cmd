@@ -1,1 +1,1 @@
-python -m venv .venv
+pipenv --python 3.10
